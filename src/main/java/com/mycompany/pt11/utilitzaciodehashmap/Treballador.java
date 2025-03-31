@@ -9,22 +9,21 @@ package com.mycompany.pt11.utilitzaciodehashmap;
  * @author Bea i Yamila
  */
 public class Treballador {
-    
-    private String nom, dni;
+    private String dni, nom;
     private int edat;
-    private double alçada;
+    private double altura;
     
-    public Treballador(String dni, String nom, int edat, double alçada) {
+    public Treballador(String dni, String nom, int edat, double altura) {
         this.dni = dni;
         this.nom = nom;
         this.edat = edat;
-        this.alçada = alçada;
+        this.altura = altura;
     }
 
     public String getDni() {
         return dni;
     }
-
+    
     public String getNom() {
         return nom;
     }
@@ -33,13 +32,13 @@ public class Treballador {
         return edat;
     }
 
-    public double getAlçada() {
-        return alçada;
+    public double getAltura() {
+        return altura;
     }
 
     @Override
     public String toString() {
-        return "Treballador{" + "nom=" + nom + ", dni=" + dni + ", edat=" + edat + ", al\u00e7ada=" + alçada + '}';
+        return "Treballador{" + "nom=" + nom + ", edat=" + edat + ", alçada=" + altura + '}';
     }
     
 }

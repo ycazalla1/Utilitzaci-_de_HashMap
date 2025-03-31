@@ -16,9 +16,14 @@ public class Empresa {
     
     Map<String, Treballador> treballadors = new HashMap<>();
     
-    public Empresa(Treballador t) {
-        treballadors.put(t.getDni(), t);
+    public Empresa() {
+        
     }
+
+    public void putTreballadors(String dni, Treballador t) {
+        treballadors.put(dni, t);
+    }
+    
     
     public int getMitjana() {
         
@@ -38,33 +43,45 @@ public class Empresa {
         
     }
     
-    public void alçadaSuperior(double alçadaMin) {
+    public ArrayList alturaSuperior(double alturaMin) {
         
         Treballador treballador;
-        double alçada;
+        double altura;
         
         ArrayList<Treballador> treballadorMajor = new ArrayList<>();
         
         for (Map.Entry<String, Treballador> t : treballadors.entrySet()) {
             treballador = t.getValue();
-            alçada = treballador.getAlçada();
-            if (alçada > alçadaMin) {
+            altura = treballador.getAltura();
+            if (altura >= alturaMin) {
                 treballadorMajor.add(treballador);
             }
             
         }
         
-        System.out.println(treballadorMajor);
+        return treballadorMajor;
     }
     
-    public void clauLliure() {
+    public boolean clauLliure(String dni, Treballador t) {
         
-        boolean valorNull;
+        boolean valorOcupat = treballadors.containsKey(dni);
         
-        valorNull = treballadors.containsKey(null);
+        if (!valorOcupat) {
+            treballadors.put(dni, t);
+            System.out.println("S'ha afegit el treballador.");
+        } else {
+            System.out.println("No s'ha afegit el treballador.");
+        }
         
-        
+        return valorOcupat;
         
     }
+
+    @Override
+    public String toString() {
+        return "Empresa{" + "treballadors=" + treballadors + '}';
+    }
+    
+    
     
 }
