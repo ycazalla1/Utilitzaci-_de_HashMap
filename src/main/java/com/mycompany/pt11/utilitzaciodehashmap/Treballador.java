@@ -67,7 +67,7 @@ public class Treballador {
      */
     @Override
     public String toString() {
-        return "Nom: " + nom + ", Edat: " + edat + ", Alçada: " + altura;
+        return "{" + "Nom: " + nom + ", Edat: " + edat + ", Alçada: " + altura + '}';
     }
     
 }
