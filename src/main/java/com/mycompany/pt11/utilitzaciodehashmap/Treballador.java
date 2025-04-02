@@ -70,4 +70,13 @@ public class Treballador {
         return "{" + "Nom: " + nom + ", Edat: " + edat + ", Alçada: " + altura + '}';
     }
     
+    /**
+     * Mètode per comparar els treballadors
+     * @param t Treballador a comparar
+     * @return boolean per saber si és identic o no
+     */
+    public boolean equals(Treballador t){
+        return this.dni.equals(t.getDni()) && this.nom.equals(t.getNom())
+                && this.edat == t.getEdat() && this.altura == t.getAltura();
+    }
 }

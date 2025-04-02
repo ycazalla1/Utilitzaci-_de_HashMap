@@ -6,7 +6,7 @@ package com.mycompany.pt11.utilitzaciodehashmap;
 import java.util.Scanner;
 
 /**
- * Classe principal per provar les classes de Treballador i Empresa
+ * Classe principal per provar les classes de Treballadorre i Empresafer
  * @author Bea i Yamila
  */
 public class PT113UtilitzaciodeHashMap {
@@ -16,10 +16,11 @@ public class PT113UtilitzaciodeHashMap {
         // Declaració de variables
         double altura; // Variable que recull l'alçada i l'alçada mínima a superar
         int i = 1, edat; // Varible d'increment i d'edat
+        boolean valorOcupat; // Variable per comprovar si està repetit o no
         /* 
             Variables per recollir el dni, el nom i per saber si es volen afegir
             més treballadors
-        */
+         */
         String dni, nom, resposta;
         // Boolean per comprovar que s'ha omplert correctament la col·lecció
         boolean mapOmplert = false;
@@ -33,19 +34,36 @@ public class PT113UtilitzaciodeHashMap {
             boolean respostaCorrecte = false;
             // Declaració de l'escàner
             Scanner sc = new Scanner(System.in);
-            
+
             // Crida dels mètodes per obtenir la informació d'un treballador
             System.out.println("--- Treballador " + i + " ---");
             dni = demanarDni(); // Mètode per obtenir el dni
             nom = demanarNom(); // Mètode per obtenir el nom
             edat = demanarEdat(); // Mètode per obtenir l'edat
-            altura = demanarAltura(); // Mètode per obtenir l'alçada
+            altura = demanarAltura(); // Mètode per obtenir l'alçada en metres
 
             // Declaració de l'instància de la classe treballador amb els valor d'abans
             Treballador t = new Treballador(dni, nom, edat, altura);
 
             // Crida del mètode per afegir el treballador si el DNI no està duplicat
-            e.clauLliure(t.getDni(), t);
+            valorOcupat = e.clauLliure(t);
+
+            if (!valorOcupat) {
+                /*
+                    Si no està repetit crida al mètode putTreballadors per crear
+                    una nova llista on s'afegeix el nou treballador
+                */
+                e.putTreballadors(t);
+                // I mostra un missatge de que s'ha afegit el treballador
+                System.out.println("S'ha afegit a una nova llista de treballadors.");
+            } else {
+                /*
+                    Si està repetit crida al mètode modifyTreballadors per
+                    afegir-lo en la llista que contingui com a clau el mateix
+                    DNI que el nou treballador
+                */
+                e.modifyTreballadors(t);
+            }
 
             // do-while per comprovar si la resposta a la pregunta és correcte
             do {
@@ -59,8 +77,12 @@ public class PT113UtilitzaciodeHashMap {
                     /*
                         Si vol afegir més, surt només d'aquest bucle intern i
                         incrementa la i
-                    */
+                     */
                     respostaCorrecte = true;
+                    /*
+                        Incrementa la i per indicar que és el següent treballador
+                    Exemple: Treballador X
+                    */
                     i++;
 
                 } else if (resposta.equalsIgnoreCase("N")) {
@@ -69,7 +91,7 @@ public class PT113UtilitzaciodeHashMap {
                     mapOmplert = true;
 
                 } else {
-                    // Si la resposta és incorrecte, només mostra un misstge d'error.
+                    // Si la resposta és incorrecte, només mostra un missatge d'error.
                     System.out.println("ERROR. Respota incorrecte. Torna a respondre.");
                 }
             } while (!respostaCorrecte);
@@ -84,16 +106,16 @@ public class PT113UtilitzaciodeHashMap {
         /*
             Missatge per indicar que es llistaran els treballadors que només
             superin una alçada
-        */
+         */
         System.out.println("--- Llista dels treballadors que superen l'alçada"
-                + "especificada ---");
+                + " especificada ---");
         // Es guarda el resultat en la varible del mètode per demanar l'alçada
         altura = demanarAltura();
 
         /*
             Condicional per comprovar si hi ha algun treballador que superi
             l'altura o no
-        */
+         */
         if (e.alturaSuperior(altura).isEmpty()) {
             // Si cap la supera, mostra un missatge indicant-lo
             System.out.println("Cap treballador supera els " + altura + ".");
@@ -119,7 +141,7 @@ public class PT113UtilitzaciodeHashMap {
         /*
             Variables de tipus enter, per guardar el número dni i incialitzar el
             comptador
-        */
+         */
         int numDni, i = 1;
         char caracter; // Variable per guarda cada caràcter del dni
         // Variables per guardar el dni sencer i la cadena dels números d'aquest
@@ -127,12 +149,12 @@ public class PT113UtilitzaciodeHashMap {
         /*
             booleans per comprovar que el dni és correcte i que no s'ha trobat
             cap lletra entre els números
-        */
+         */
         boolean dniCorrecte = false, lletraTrobada;
         /* finals enters amb els valor de la longitud amb lletra i sense, i
            el número per fer la divisió per comprovar la lletra del DNI
-        */
-        final int LONGITUD_DNI = 9, LONGITUD_NUM  = 8, DIVISOR_LLETRA = 23;
+         */
+        final int LONGITUD_DNI = 9, LONGITUD_NUM = 8, DIVISOR_LLETRA = 23;
         // finals String amb els valors de tots els números d'un dni i les lletres
         final String NUMEROS_DNI = "1234567890", LLETRA_DNI = "TRWAGMYFPDXBNJZSQVHLCKE";
 
@@ -153,7 +175,7 @@ public class PT113UtilitzaciodeHashMap {
                     lletra
                     Finalitza quan lletraTrobada és cert o arribar el final de
                     la cadena de números
-                */
+                 */
                 while (!lletraTrobada && i < LONGITUD_NUM) {
                     // Es guarda el valor del caràcter
                     caracter = dni.charAt(i);
@@ -165,13 +187,13 @@ public class PT113UtilitzaciodeHashMap {
                     // Incrementa el valor per continuar
                     i++;
                 }
-                
+
                 // Comprova si lletraTrobada és falsa
                 if (!lletraTrobada) {
                     /*
                         Si ho és, comença a fer el següent per veure si la lletra
                         és correcte
-                    */
+                     */
                     // Separa els números del DNI
                     lletresDni = dni.substring(0, 8);
                     // Pasa la cadena de números a tipus enter
@@ -185,7 +207,7 @@ public class PT113UtilitzaciodeHashMap {
                     /*
                         Es comprova si el mòdul coincideix amb la posició del
                         conjunt de lletres
-                    */
+                     */
                     if (LLETRA_DNI.charAt(numDni) != caracter) {
                         // Si no coincideix mostra un missatge d'error
                         System.out.print("La lletra del DNI no és correcte."
@@ -210,6 +232,7 @@ public class PT113UtilitzaciodeHashMap {
 
     /**
      * Mètode per demanar el nom del treballador
+     *
      * @return el nom obtingut
      */
     public static String demanarNom() {
@@ -226,10 +249,11 @@ public class PT113UtilitzaciodeHashMap {
 
     /**
      * Mètode per demanar l'edat del treballador
+     *
      * @return l'edat obtinguda
      */
     public static int demanarEdat() {
-        
+
         // Declarció de variables
         int edat = 0; // Guarda l'edat
         // boolean per comprovar que l'edat és correcte
@@ -262,12 +286,13 @@ public class PT113UtilitzaciodeHashMap {
                         + "\nTorna a introduir-lo de nou: ");
             }
         }
-        
+
         return edat; // Retorna el resultat de l'edat
     }
 
     /**
      * Mètode per demanar l'alçada del treballador
+     *
      * @return l'alçada obtinguda
      */
     public static double demanarAltura() {
