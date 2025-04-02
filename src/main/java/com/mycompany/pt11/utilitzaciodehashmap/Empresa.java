@@ -29,7 +29,6 @@ public class Empresa {
     /**
      * Mètode per afegir treballadors a la col·lecció
      *
-     * @param dni del treballador
      * @param t resta de dades del treballador
      */
     public void putTreballadors(Treballador trb) {
